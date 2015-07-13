@@ -85,6 +85,12 @@ class ContentVisJsTimelineManual extends \Contao\ContentElement
 		$this->Template->endJs = $this->createJsDate($this->visJsTimeline_end);
 		
 		$this->Template->items = $this->getItems();
+		
+		if (TL_MODE == 'BE')
+		{
+			// only load the default JS and CSS in backend, for frontend this will be done in template
+			$GLOBALS['TL_JAVASCRIPT']['vis-js-timeline.js'] = 'system/modules/VisJsTimeline/assets/js/vis-js-timeline.min.js';
+		}
 	}
 	
 	/**
