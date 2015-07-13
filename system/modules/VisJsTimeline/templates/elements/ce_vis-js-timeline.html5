@@ -1,0 +1,69 @@
+<?php
+$GLOBALS['TL_CSS']['vis.css'] = 'assets/vis.js/'. VIS_JS .'/vis.min.css||static';
+$GLOBALS['TL_JAVASCRIPT']['vis.js'] = 'assets/vis.js/'. VIS_JS .'/vis.min.js';
+$GLOBALS['TL_CSS']['vis-js-timeline_default.css'] = 'system/modules/VisJsTimeline/assets/css/vis-js-timeline.min.css||static';
+$GLOBALS['TL_BODY']['vis-js-timeline.js'] = '<script src="system/modules/VisJsTimeline/assets/js/vis-js-timeline.min.js"></script>';
+?>
+<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+  <?php if ($this->headline): ?>
+    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+  <?php endif; ?>
+
+  <div id="timeline<?php echo $this->id; ?>" class="timeline">
+    <div class="timeline-menu">
+      <img id="zoomIn<?php echo $this->id; ?>" src="system/modules/VisJsTimeline/assets/zoom-in.png" alt="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['zoomIn']; ?>" title="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['zoomIn']; ?>" />
+      <img id="zoomOut<?php echo $this->id; ?>" src="system/modules/VisJsTimeline/assets/zoom-out.png" alt="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['zoomOut']; ?>" title="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['zoomOut']; ?>" />
+      <img id="moveLeft<?php echo $this->id; ?>" src="system/modules/VisJsTimeline/assets/move-left.png" alt="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['moveLeft']; ?>" title="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['moveLeft']; ?>" />
+      <img id="moveRight<?php echo $this->id; ?>" src="system/modules/VisJsTimeline/assets/move-right.png" alt="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['moveRight']; ?>" title="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['moveRight']; ?>" />
+    </div> 
+  </div>
+
+  <script type="text/javascript">
+  // create data
+  // note, that months are zero-based in the JavaScript Date object
+  var data<?php echo $this->id; ?> = new vis.DataSet([
+<?php foreach($this->items as $item): ?>
+  {
+    'start': <?php echo $item['startJs']; ?>,
+  <?php if ($item['endJs']): ?>
+    'end': <?php echo $item['endJs']; ?>,
+  <?php endif; ?>
+    'content': '<?php echo $item['content']; ?>',
+  <?php if ($item['title']): ?>
+    'title': '<?php echo $item['title']; ?>',
+  <?php endif; ?>
+  <?php if ($item['className']): ?>
+    'className': '<?php echo $item['className']; ?>'
+  <?php endif; ?>
+  },
+<?php endforeach; ?>
+  ]);
+
+  // specify options
+  var options<?php echo $this->id; ?> = {
+    editable: false,
+    zoomable: false,
+    stack: true,
+    selectable: false,
+    orientation: 'top',
+  <?php if ($this->startJs): ?>
+    start: <?php echo $this->startJs; ?>,
+  <?php endif; ?>
+  <?php if ($this->endJs): ?>
+    end: <?php echo $this->endJs; ?>,
+  <?php endif; ?>
+  };
+
+  // create the timeline
+  var container<?php echo $this->id; ?> = document.getElementById('timeline<?php echo $this->id; ?>');
+  timeline<?php echo $this->id; ?> = new vis.Timeline(container<?php echo $this->id; ?>, data<?php echo $this->id; ?>, options<?php echo $this->id; ?>);
+
+  // attach events to the navigation buttons
+  document.getElementById('zoomIn<?php echo $this->id; ?>').onclick    = function () { zoomTimeline(-0.2, timeline<?php echo $this->id; ?>); };
+  document.getElementById('zoomOut<?php echo $this->id; ?>').onclick   = function () { zoomTimeline( 0.2, timeline<?php echo $this->id; ?>); };
+  document.getElementById('moveLeft<?php echo $this->id; ?>').onclick  = function () { moveTimeline( 0.2, timeline<?php echo $this->id; ?>); };
+  document.getElementById('moveRight<?php echo $this->id; ?>').onclick = function () { moveTimeline(-0.2, timeline<?php echo $this->id; ?>); };
+</script>
+
+</div>

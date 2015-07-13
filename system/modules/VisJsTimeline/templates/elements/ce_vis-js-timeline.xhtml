@@ -1,0 +1,96 @@
+<?php
+$GLOBALS['TL_CSS']['vis-js-timeline_default.css'] = 'system/modules/VisJsTimeline/assets/css/vis-js-timeline_default.min.css||static';
+$GLOBALS['TL_CSS']['vis.css'] = 'assets/vis.js/'. VIS_JS .'/vis.min.css||static';
+$GLOBALS['TL_JAVASCRIPT']['vis.js'] = 'assets/vis.js/'. VIS_JS .'/vis.min.js';
+?>
+<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+  <?php if ($this->headline): ?>
+    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+  <?php endif; ?>
+
+  <div id="timeline" class="timeline">
+    <div class="timeline-menu">
+      <img id="zoomIn-" src="system/modules/VisJsTimeline/assets/zoom-in.png" alt="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['zoomIn']; ?>" title="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['zoomIn']; ?>" />
+      <img id="zoomOut-" src="system/modules/VisJsTimeline/assets/zoom-out.png" alt="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['zoomOut']; ?>" title="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['zoomOut']; ?>" />
+      <img id="moveLeft-" src="system/modules/VisJsTimeline/assets/move-left.png" alt="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['moveLeft']; ?>" title="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['moveLeft']; ?>" />
+      <img id="moveRight-" src="system/modules/VisJsTimeline/assets/move-right.png" alt="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['moveRight']; ?>" title="<?php echo $GLOBALS['TL_LANG']['tl_content']['visJsTimeline_menu']['moveRight']; ?>" />
+    </div> 
+  </div>
+
+  <script type="text/javascript">
+  // create data
+  // note, that months are zero-based in the JavaScript Date object
+  var data = new vis.DataSet([
+<?php foreach($this->items as $item): ?>
+  {
+    'start': <?php echo $item['startJs']; ?>,
+  <?php if ($item['endJs']): ?>
+    'end': <?php echo $item['endJs']; ?>,
+  <?php endif; ?>
+    'content': '<?php echo $item['content']; ?>',
+  <?php if ($item['title']): ?>
+    'title': '<?php echo $item['title']; ?>',
+  <?php endif; ?>
+  <?php if ($item['className']): ?>
+    'className': '<?php echo $item['className']; ?>'
+  <?php endif; ?>
+  },
+<?php endforeach; ?>
+  ]);
+
+  // specify options
+  var options = {
+    editable: false,
+    zoomable: false,
+    stack: true,
+    selectable: false,
+    orientation: 'top',
+  <?php if ($this->startJs): ?>
+    start: <?php echo $this->startJs; ?>,
+  <?php endif; ?>
+  <?php if ($this->endJs): ?>
+    end: <?php echo $this->endJs; ?>,
+  <?php endif; ?>
+  };
+
+  // create the timeline
+  var container = document.getElementById('timeline');
+  timeline = new vis.Timeline(container, data, options);
+
+  /**
+   * Move the timeline a given percentage to left or right
+   * @param {Number} percentage   For example 0.1 (left) or -0.1 (right)
+   */
+  function move (percentage) {
+    var range = timeline.getWindow();
+    var interval = range.end - range.start;
+
+    timeline.setWindow({
+      start: range.start.valueOf() - interval * percentage,
+      end:   range.end.valueOf()   - interval * percentage
+    });
+  }
+
+  /**
+   * Zoom the timeline a given percentage in or out
+   * @param {Number} percentage   For example 0.1 (zoom out) or -0.1 (zoom in)
+   */
+  function zoom (percentage) {
+    var range = timeline.getWindow();
+    var interval = range.end - range.start;
+
+    timeline.setWindow({
+      start: range.start.valueOf() - interval * percentage,
+      end:   range.end.valueOf()   + interval * percentage
+    });
+  }
+
+  // attach events to the navigation buttons
+  document.getElementById('zoomIn-').onclick    = function () { zoom(-0.2); };
+  document.getElementById('zoomOut-').onclick   = function () { zoom( 0.2); };
+  document.getElementById('moveLeft-').onclick  = function () { move( 0.2); };
+  document.getElementById('moveRight-').onclick = function () { move(-0.2); }; 
+</script>
+
+</div>

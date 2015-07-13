@@ -1,0 +1,36 @@
+{
+	"name":"cliffparnitzky/vis.js-timeline",
+	"description":"Provides content elements to create vis.js timelines.",
+	"keywords":["contao", "vis.js", "timeline"],
+	"type":"contao-module",
+	"license":"LGPL-3.0+",
+	"authors":[
+		{
+			"name":"Cliff Parnitzky",
+			"email":"contao@cliff-parnitzky.de",
+			"role":"Developer"
+		}
+	],
+	"support":{
+		"email":"contao@cliff-parnitzky.de",
+		"issues":"https://github.com/cliffparnitzky/vis.js-timeline/issues",
+		"source":"https://github.com/cliffparnitzky/vis.js-timeline"
+	},
+	"require":{
+		"php":">=5.3",
+		"contao/core":">=3.2.0,<3.6",
+		"contao-community-alliance/composer-plugin":"~2.0",
+		"menatwork/contao-multicolumnwizard":"~3.3",
+		"cliffparnitzky/vis.js":"~4.4"
+	},
+	"extra":{
+		"contao":{
+			"sources":{
+				"system/modules/VisJsTimeline":"system/modules/VisJsTimeline"
+			}
+		},
+		"branch-alias": {
+			"dev-master": "1.0.x-dev"
+		}
+	}
+}
