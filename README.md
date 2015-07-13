@@ -34,4 +34,4 @@ Compatibility
 Dependency
 ----------
 
-- This extension is dependent on the following extensions: [[cliffparnitzky/monitoring]](https://packagist.org/packages/cliffparnitzky/monitoring), [[cliffparnitzky/vis.js]](https://packagist.org/packages/cliffparnitzky/vis.js)
+- This extension is dependent on the following extensions: [[menatwork/contao-multicolumnwizard]](https://packagist.org/packages/menatwork/contao-multicolumnwizard), [[cliffparnitzky/vis.js]](https://packagist.org/packages/cliffparnitzky/vis.js)
