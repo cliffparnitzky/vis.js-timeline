@@ -95,7 +95,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['visJsTimeline_items'] = array
 				'label'            => &$GLOBALS['TL_LANG']['tl_content']['visJsTimeline_items_className'],
 				'exclude'          => true,
 				'inputType'        => 'text',
-				'eval'             => array('style'=>'width: 50px;', 'nospace'=>true)
+				'eval'             => array('style'=>'width: 50px;')
 			),
 			'active' => array
 			(
