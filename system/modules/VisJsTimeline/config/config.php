@@ -37,7 +37,7 @@ $GLOBALS['TL_CTE']['visJs']['visJsTimelineManual'] = 'CliffParnitzky\Contao\VisJ
  */
 if (TL_MODE == 'BE')
 {
-  $GLOBALS['TL_CSS']['vis-js-timeline_be.css'] = 'system/modules/VisJsTimeline/assets/css/vis-js-timeline_be.css';
+  $GLOBALS['TL_CSS']['vis-js-timeline_be.css'] = 'system/modules/VisJsTimeline/assets/css/vis-js-timeline_be.min.css';
 }
 
 ?>
